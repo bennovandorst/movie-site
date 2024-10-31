@@ -2,10 +2,12 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import MovieDetails from "./pages/MovieDetails";
 import MovieEmbed from "./components/MovieEmbed";
+import Navbar from "./components/Navbar";
 
 function App() {
   return (
     <Router>
+      <Navbar />
       <Routes>
         <Route path="*" element={<Home />} />
         <Route path="/movie/:id" element={<MovieDetails />} />
@@ -15,4 +17,4 @@ function App() {
   );
 }
 
-export default App
+export default App;
