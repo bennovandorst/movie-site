@@ -11,8 +11,8 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="*" element={<Home />} />
-        <Route path="movie-site/movie/:id" element={<MovieDetails />} />
-        <Route path="movie-site/watch/:id" element={<MovieEmbed />} />
+        <Route path="/movie-site/movie/:id" element={<MovieDetails />} />
+        <Route path="/movie-site/watch/:id" element={<MovieEmbed />} />
       </Routes>
       <Footer />
     </Router>
