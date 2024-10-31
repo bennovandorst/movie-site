@@ -34,7 +34,7 @@ const MovieDetails = () => {
                         <p><strong>Release Date:</strong> {movie.release_date}</p>
                         <p><strong>Rating:</strong> {movie.vote_average}</p>
                     </div>
-                    <Link to="/" className="block mt-4 text-blue-500 hover:underline">Back to Home</Link>
+                    <Link to="/movie-site" className="block mt-4 text-blue-500 hover:underline">Back to Home</Link> {/* Gay ass impl */}
                     <Link to={`/watch/${id}`} className="block mt-4 text-blue-500 hover:underline">Watch</Link>
                 </div>
             </div>
