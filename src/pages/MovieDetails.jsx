@@ -34,8 +34,16 @@ const MovieDetails = () => {
                         <p><strong>Release Date:</strong> {movie.release_date}</p>
                         <p><strong>Rating:</strong> {movie.vote_average}</p>
                     </div>
-                    <Link to="/movie-site" className="block mt-4 text-blue-500 hover:underline">Back to Home</Link> {/* Gay ass impl */}
-                    <Link to={`/movie-site/watch/${id}`} className="block mt-4 text-blue-500 hover:underline">Watch</Link>
+                    <Link to={`/movie-site/watch/${id}`} className="block mt-4">
+                        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                            Watch
+                        </button>
+                    </Link>
+                    <Link to="/movie-site" className="block mt-4">
+                        <button className="bg-gray-500 hover:bg-gray-800 text-white font-bold py-2 px-4 rounded">
+                            Back to Home
+                        </button>
+                    </Link>
                 </div>
             </div>
         </div>
