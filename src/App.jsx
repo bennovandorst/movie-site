@@ -3,6 +3,7 @@ import Home from "./pages/Home";
 import MovieDetails from "./pages/MovieDetails";
 import MovieEmbed from "./components/MovieEmbed";
 import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route path="/movie/:id" element={<MovieDetails />} />
         <Route path="/watch/:id" element={<MovieEmbed />} />
       </Routes>
+      <Footer />
     </Router>
   );
 }
