@@ -6,7 +6,7 @@ const MovieCard = ({ movie }) => {
 
     return (
         <Link 
-            to={`/movie/${movie.id}`} 
+            to={`/movie-site/movie/${movie.id}`} 
             className="block"
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
