@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import MovieList from "../components/MovieList";
 import axios from 'axios';
+import Hero from "../components/Hero";
 
 const Home = () => {
     const [movies, setMovies] = useState([]);
@@ -52,6 +53,7 @@ const Home = () => {
                 />
             </div>
             <MovieList movies={movies} />
+            <Hero />
         </div>
     );
 };
