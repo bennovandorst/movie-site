@@ -4,6 +4,7 @@ import MovieDetails from "./pages/MovieDetails";
 import MovieEmbed from "./components/MovieEmbed";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import Fuckyou from "./pages/Fuckyou";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route path="*" element={<Home />} />
         <Route path="/movie-site/movie/:id" element={<MovieDetails />} />
         <Route path="/movie-site/watch/:id" element={<MovieEmbed />} />
+        <Route path="/movie-site/fuckyou" element={<Fuckyou />} />
       </Routes>
       <Footer />
     </Router>
