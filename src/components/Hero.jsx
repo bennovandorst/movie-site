@@ -6,7 +6,7 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import { Navigation, Pagination, Autoplay } from 'swiper/modules';
 
-const Hero = () => {
+const Hero = ({ setSearchValue }) => {
     const [movies, setMovies] = useState([]);
 
     useEffect(() => {
@@ -24,8 +24,8 @@ const Hero = () => {
         fetchPopularMovies();
     }, []);
 
-    const handleMovieClick = (id) => {
-        window.location.href = `/movie-site/movie/${id}`;
+    const handleMovieClick = (title) => {
+        setSearchValue(title);
     };
 
     return (
@@ -46,7 +46,7 @@ const Hero = () => {
                     }}
                 >
                     {movies.map((movie) => (
-                        <SwiperSlide key={movie.id} onClick={() => handleMovieClick(movie.id)}>
+                        <SwiperSlide key={movie.id} onClick={() => handleMovieClick(movie.title)}>
                             <div className="movie-card bg-gray-800 p-4 rounded-lg cursor-pointer">
                                 <img
                                     src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}

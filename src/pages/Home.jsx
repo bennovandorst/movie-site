@@ -53,7 +53,7 @@ const Home = () => {
                 />
             </div>
             <MovieList movies={movies} />
-            <Hero />
+            <Hero setSearchValue={setSearchTerm} />
         </div>
     );
 };
