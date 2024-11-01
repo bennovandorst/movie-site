@@ -14,7 +14,7 @@ function App() {
         <Route path="*" element={<Home />} />
         <Route path="/movie-site/movie/:id" element={<MovieDetails />} />
         <Route path="/movie-site/watch/:id" element={<MovieEmbed />} />
-        <Route path="/movie-site/fuckyou" element={<Fuckyou />} />
+        <Route path="/fuckyou" element={<Fuckyou />} />
       </Routes>
       <Footer />
     </Router>
