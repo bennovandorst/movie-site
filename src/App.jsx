@@ -8,12 +8,12 @@ import NoPage from "./pages/NoPage";
 
 function App() {
   return (
-    <Router>
+    <Router basename="/movie-site">
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/movie-site/movie/:id" element={<MovieDetails />} />
-        <Route path="/movie-site/watch/:id" element={<MovieEmbed />} />
+        <Route path="/movie/:id" element={<MovieDetails />} />
+        <Route path="/watch/:id" element={<MovieEmbed />} />
         <Route path="*" element={<NoPage />} />
       </Routes>
       <Footer />
