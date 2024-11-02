@@ -1,54 +1,115 @@
 import { useEffect, useState } from "react";
 import MovieList from "../components/MovieList";
-import axios from 'axios';
-import Hero from "../components/Hero";
+import axios from "axios";
 
 const Home = () => {
     const [movies, setMovies] = useState([]);
-    const [searchTerm, setSearchTerm] = useState("")
-    const [randomMovieId, setRandomMovieId] = useState(null);
-    
-    useEffect(() => {
-        const fetchMovies = async () => {
-            const response = await fetch(
-                `https://api.themoviedb.org/3/search/movie?query=${searchTerm}&api_key=c7cf1f564fa32aed665c2abb44d2ffb9`
-            );
-            const data = await response.json();
-            if (data.results) setMovies(data.results);
-        };
-        fetchMovies();
-    }, [searchTerm]);
+    const [searchTerm, setSearchTerm] = useState("");
+    const [featuredMovies, setFeaturedMovies] = useState([]);
+    const [currentMovieIndex, setCurrentMovieIndex] = useState(0);
+    const [isAnimating, setIsAnimating] = useState(false);
 
     useEffect(() => {
-        const fetchRandomMovie = async () => {
+        const fetchMovies = async () => {
+            if (searchTerm) {
+                try {
+                    const response = await axios.get(
+                        `https://api.themoviedb.org/3/search/movie?query=${searchTerm}&api_key=c7cf1f564fa32aed665c2abb44d2ffb9`
+                    );
+                    setMovies(response.data.results || []);
+                } catch (error) {
+                    console.error("Error fetching movies:", error);
+                }
+            } else {
+                setMovies(featuredMovies);
+            }
+        };
+        fetchMovies();
+    }, [searchTerm, featuredMovies]);
+
+    useEffect(() => {
+        const fetchInitialMovies = async () => {
             try {
-                const response = await axios.get('https://api.themoviedb.org/3/movie/popular?api_key=c7cf1f564fa32aed665c2abb44d2ffb9', 
+                const trendingResponse = await axios.get(
+                    `https://api.themoviedb.org/3/trending/movie/day?api_key=c7cf1f564fa32aed665c2abb44d2ffb9`
                 );
-                const movies = response.data.results;
-                const randomIndex = Math.floor(Math.random() * movies.length);
-                setRandomMovieId(movies[randomIndex].original_title);
+                setFeaturedMovies(trendingResponse.data.results || []);
             } catch (error) {
-                console.error('Error fetching random movie:', error);
+                console.error("Error fetching initial movies:", error);
             }
         };
 
-        fetchRandomMovie();
+        fetchInitialMovies();
     }, []);
 
+    const nextMovie = () => {
+        if (isAnimating) return;
+        setIsAnimating(true);
+        setCurrentMovieIndex((prevIndex) => 
+            (prevIndex + 1) % featuredMovies.length
+        );
+    };
+
+    const prevMovie = () => {
+        if (isAnimating) return;
+        setIsAnimating(true);
+        setCurrentMovieIndex((prevIndex) => 
+            (prevIndex - 1 + featuredMovies.length) % featuredMovies.length
+        );
+    };
+
+    const handleAnimationEnd = () => {
+        setIsAnimating(false);
+    };
+
+    useEffect(() => {
+        const interval = setInterval(nextMovie, 3000);
+        return () => clearInterval(interval);
+    }, [featuredMovies]);
+
     return (
-        <div className="container mx-auto p-4 min-h-screen">
-            <h1 className="text-4xl font-bold mb-6 text-center text-white">Movies</h1>
-            <div className="flex justify-center mb-6">
+        <div className="container mx-auto p-4 min-h-screen bg-gray-900 text-white">
+            <div className="relative overflow-hidden rounded-lg">
+                <div 
+                    className={`transition-transform duration-700 ease-in-out ${isAnimating ? 'animate' : ''}`}
+                    style={{
+                        transform: `translateX(-${currentMovieIndex * 100}%)`,
+                        display: 'flex',
+                    }}
+                >
+                    {featuredMovies.map((movie, index) => (
+                        <div 
+                            key={index} 
+                            className="w-full flex-shrink-0 bg-cover bg-center h-96"
+                            style={{
+                                backgroundImage: `url(https://image.tmdb.org/t/p/original${movie.backdrop_path})`,
+                            }}
+                        >
+                            <div className="p-6">
+                                <h1 className="text-5xl font-bold mb-4">{movie.original_title}</h1>
+                                <p className="mb-6">{movie.overview}</p>
+                                <button
+                                    className="px-4 py-2 bg-blue-600 text-white rounded-lg shadow-lg hover:bg-blue-700"
+                                    onClick={() => setSearchTerm(movie.original_title)}
+                                >
+                                    Watch Now
+                                </button>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+            <div className="flex justify-center mt-8 mb-6">
                 <input
                     type="text"
-                    placeholder={randomMovieId}
+                    placeholder="Search for a movie..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    className="p-3 w-full max-w-md border border-gray-400 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="p-3 w-full max-w-md border border-gray-500 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
                 />
             </div>
-            <MovieList movies={movies} />
-            <Hero setSearchValue={setSearchTerm} />
+            <h2 className="text-3xl font-semibold mb-4">Movies</h2>
+            <MovieList movies={movies.length ? movies : featuredMovies} />
         </div>
     );
 };

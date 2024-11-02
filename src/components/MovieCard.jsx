@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 const MovieCard = ({ movie }) => {
     const [isHovered, setIsHovered] = useState(false);
@@ -7,7 +7,7 @@ const MovieCard = ({ movie }) => {
     return (
         <Link 
             to={`/movie-site/movie/${movie.id}`} 
-            className="block"
+            className="block transform transition-transform duration-300 hover:scale-105"
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
         >
@@ -20,10 +20,11 @@ const MovieCard = ({ movie }) => {
                     />
                 </div>
                 {isHovered && (
-                    <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-75 p-4">
-                        <h3 className="text-lg font-bold">{movie.title}</h3>
-                        <p className="text-sm">{new Date(movie.release_date).getFullYear()}</p>
-                        <p className="text-sm">{movie.media_type}</p>
+                    <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-80 p-4 transition-opacity duration-300 ease-in-out">
+                        <h3 className="text-lg font-bold mb-1">{movie.title}</h3>
+                        <p className="text-sm mb-1">
+                            {movie.release_date ? new Date(movie.release_date).getFullYear() : ""}
+                        </p>
                     </div>
                 )}
             </div>
