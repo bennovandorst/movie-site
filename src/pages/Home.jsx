@@ -22,13 +22,8 @@ const Home = () => {
     useEffect(() => {
         const fetchRandomMovie = async () => {
             try {
-                const response = await axios.get('https://api.themoviedb.org/3/movie/popular', {
-                    params: {
-                        api_key: 'c7cf1f564fa32aed665c2abb44d2ffb9',
-                        language: 'en-US',
-                        page: 1
-                    }
-                });
+                const response = await axios.get('https://api.themoviedb.org/3/movie/popular?api_key=c7cf1f564fa32aed665c2abb44d2ffb9', 
+                );
                 const movies = response.data.results;
                 const randomIndex = Math.floor(Math.random() * movies.length);
                 setRandomMovieId(movies[randomIndex].original_title);
