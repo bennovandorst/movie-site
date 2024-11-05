@@ -72,7 +72,7 @@ const Home = () => {
         : movies;
 
     return (
-        <div className="container mx-auto p-4 min-h-screen bg-gray-900 text-white">
+        <div className="container mx-auto p-4 min-h-screen text-white">
             <MovieCarousel featuredMovies={featuredMovies} onSelectMovie={setSearchTerm} />
             <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
             <GenreSelector genres={genres} selectedGenre={selectedGenre} setSelectedGenre={setSelectedGenre} />

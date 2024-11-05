@@ -27,7 +27,7 @@ const MovieDetails = () => {
     if (!movie) return <p>Movie not found.</p>;
 
     return (
-        <div className="container mx-auto p-6 text-white bg-gray-900 min-h-screen">
+        <div className="container mx-auto p-6 text-white min-h-screen">
             <div className="flex flex-col md:flex-row items-start md:space-x-8 p-4 bg-gray-800 bg-opacity-90 rounded-lg shadow-lg">
                 <img
                     src={movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : "https://via.placeholder.com/500"}

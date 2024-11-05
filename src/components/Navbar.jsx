@@ -1,6 +1,6 @@
 const Navbar = () => {
     return (
-        <nav className="bg-gray-900 shadow-md">
+        <nav className="shadow-md">
             <div className="container mx-auto px-4 py-2 flex justify-between items-center">
                 <div className="hidden md:flex space-x-6">
                     <a href="/movie-site" className="text-gray-300 hover:text-white">Home</a>
