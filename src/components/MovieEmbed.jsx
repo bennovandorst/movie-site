@@ -8,7 +8,9 @@ const MovieEmbed = () => {
     const servers = [
         { name: 'Server 1', url: 'https://embed.su/embed/movie/' },
         { name: 'Server 2', url: 'https://vidsrc.in/embed/movie/' },
-        { name: 'Server 3', url: 'https://player.autoembed.cc/embed/movie/' }
+        { name: 'Server 3', url: 'https://player.autoembed.cc/embed/movie/' },
+        { name: 'Server 4', url: 'https://www.2embed.cc/embed/' },
+        { name: 'Server 5', url: 'https://vidlink.pro/movie/' }
     ];
 
     const embedUrl = `${servers.find(s => s.name === server).url}${id}`;
