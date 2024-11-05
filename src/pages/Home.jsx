@@ -10,15 +10,18 @@ const Home = () => {
     const [isAnimating, setIsAnimating] = useState(false);
     const [genres, setGenres] = useState([]);
     const [selectedGenre, setSelectedGenre] = useState("");
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
 
     useEffect(() => {
-        const fetchMovies = async () => {
+        const fetchMovies = async (page = 1) => {
             if (searchTerm) {
                 try {
                     const response = await axios.get(
-                        `https://api.themoviedb.org/3/search/movie?query=${searchTerm}&api_key=c7cf1f564fa32aed665c2abb44d2ffb9`
+                        `https://api.themoviedb.org/3/search/movie?query=${searchTerm}&page=${page}&api_key=c7cf1f564fa32aed665c2abb44d2ffb9`
                     );
                     setMovies(response.data.results || []);
+                    setTotalPages(response.data.total_pages || 1);
                 } catch (error) {
                     console.error("Error fetching movies:", error);
                 }
@@ -26,8 +29,8 @@ const Home = () => {
                 setMovies(featuredMovies);
             }
         };
-        fetchMovies();
-    }, [searchTerm, featuredMovies]);
+        fetchMovies(currentPage);
+    }, [searchTerm, featuredMovies, currentPage]);
 
     useEffect(() => {
         const fetchInitialMovies = async () => {
@@ -84,6 +87,12 @@ const Home = () => {
     const filteredMovies = selectedGenre
         ? movies.filter((movie) => movie.genre_ids.includes(parseInt(selectedGenre)))
         : movies;
+
+    const handlePageChange = (newPage) => {
+        if (newPage > 0 && newPage <= totalPages) {
+            setCurrentPage(newPage);
+        }
+    };
 
     return (
         <div className="container mx-auto p-4 min-h-screen bg-gray-900 text-white">
@@ -142,6 +151,23 @@ const Home = () => {
             </div>
             <h2 className="text-3xl font-semibold mb-4">Movies</h2>
             <MovieList movies={filteredMovies.length ? filteredMovies : featuredMovies} />
+            <div className="flex justify-center mt-8">
+                <button
+                    className="px-4 py-2 bg-blue-600 text-white rounded-lg shadow-lg hover:bg-blue-700 mx-2"
+                    onClick={() => handlePageChange(currentPage - 1)}
+                    disabled={currentPage === 1}
+                >
+                    Previous
+                </button>
+                <span className="px-4 py-2">{currentPage} / {totalPages}</span>
+                <button
+                    className="px-4 py-2 bg-blue-600 text-white rounded-lg shadow-lg hover:bg-blue-700 mx-2"
+                    onClick={() => handlePageChange(currentPage + 1)}
+                    disabled={currentPage === totalPages}
+                >
+                    Next
+                </button>
+            </div>
         </div>
     );
 };
