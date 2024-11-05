@@ -16,13 +16,13 @@ const MovieEmbed = () => {
     const embedUrl = `${servers.find(s => s.name === server).url}${id}`;
 
     return (
-        <div className="relative h-screen">
-            <div className="mb-4 flex justify-center space-x-2">
+        <div>
+            <div className="mb-4 flex justify-center space-x-2 p-4">
                 {servers.map(s => (
                     <button
                         key={s.name}
                         onClick={() => setServer(s.name)}
-                        className={`px-4 py-2 rounded transition-colors duration-300 ${server === s.name ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`}
+                        className={`px-4 py-2 rounded transition-colors duration-300 ${server === s.name ? 'bg-blue-600 text-white' : 'bg-gray-700 text-gray-300 hover:bg-gray-600'}`}
                     >
                         {s.name}
                     </button>
@@ -31,7 +31,7 @@ const MovieEmbed = () => {
             <div className="relative pt-[56.25%]">
                 <iframe
                     src={embedUrl}
-                    className="absolute top-0 left-0 w-full h-full rounded-lg shadow-lg"
+                    className="absolute top-0 left-0 w-full h-full rounded-lg shadow-lg border-4 border-gray-800"
                     allowFullScreen
                     title="Movie Embed"
                 ></iframe>
