@@ -8,6 +8,8 @@ const Home = () => {
     const [featuredMovies, setFeaturedMovies] = useState([]);
     const [currentMovieIndex, setCurrentMovieIndex] = useState(0);
     const [isAnimating, setIsAnimating] = useState(false);
+    const [genres, setGenres] = useState([]);
+    const [selectedGenre, setSelectedGenre] = useState("");
 
     useEffect(() => {
         const fetchMovies = async () => {
@@ -39,7 +41,19 @@ const Home = () => {
             }
         };
 
+        const fetchGenres = async () => {
+            try {
+                const genreResponse = await axios.get(
+                    `https://api.themoviedb.org/3/genre/movie/list?api_key=c7cf1f564fa32aed665c2abb44d2ffb9`
+                );
+                setGenres(genreResponse.data.genres || []);
+            } catch (error) {
+                console.error("Error fetching genres:", error);
+            }
+        };
+
         fetchInitialMovies();
+        fetchGenres();
     }, []);
 
     const nextMovie = () => {
@@ -66,6 +80,10 @@ const Home = () => {
         const interval = setInterval(nextMovie, 3000);
         return () => clearInterval(interval);
     }, [featuredMovies]);
+
+    const filteredMovies = selectedGenre
+        ? movies.filter((movie) => movie.genre_ids.includes(parseInt(selectedGenre)))
+        : movies;
 
     return (
         <div className="container mx-auto p-4 min-h-screen bg-gray-900 text-white">
@@ -108,8 +126,22 @@ const Home = () => {
                     className="p-3 w-full max-w-md border border-gray-500 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
                 />
             </div>
+            <div className="flex justify-center mt-8 mb-6">
+                <select
+                    value={selectedGenre}
+                    onChange={(e) => setSelectedGenre(e.target.value)}
+                    className="p-3 w-full max-w-md border border-gray-500 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
+                >
+                    <option value="">All Genres</option>
+                    {genres.map((genre) => (
+                        <option key={genre.id} value={genre.id}>
+                            {genre.name}
+                        </option>
+                    ))}
+                </select>
+            </div>
             <h2 className="text-3xl font-semibold mb-4">Movies</h2>
-            <MovieList movies={movies.length ? movies : featuredMovies} />
+            <MovieList movies={filteredMovies.length ? filteredMovies : featuredMovies} />
         </div>
     );
 };
