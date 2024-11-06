@@ -81,8 +81,14 @@ const Home = () => {
                 <MovieList movies={filteredMovies} />
             ) : (
                 <div className="flex flex-col items-center justify-center h-64">
-                    <p className="text-center text-xl mb-4">No results</p>
-                </div>
+    <span role="img" aria-label="Popcorn" className="text-6xl mb-4">🍿</span>
+    <p className="text-center text-2xl font-semibold mb-2">Uh-oh! It's like a movie without a plot...</p>
+    <p className="text-center text-lg text-gray-500 mb-4">We couldn’t find any results for your search.</p>
+    <p className="text-center text-sm italic text-gray-400">
+        (Try another search, or just grab some popcorn and browse instead!)
+    </p>
+</div>
+
             )}
             <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
         </div>
