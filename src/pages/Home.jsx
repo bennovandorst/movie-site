@@ -77,7 +77,13 @@ const Home = () => {
             <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
             <GenreSelector genres={genres} selectedGenre={selectedGenre} setSelectedGenre={setSelectedGenre} />
             <h2 className="text-3xl font-semibold mb-4">Movies</h2>
-            <MovieList movies={filteredMovies.length ? filteredMovies : featuredMovies} />
+            {filteredMovies.length ? (
+                <MovieList movies={filteredMovies} />
+            ) : (
+                <div className="flex flex-col items-center justify-center h-64">
+                    <p className="text-center text-xl mb-4">No results</p>
+                </div>
+            )}
             <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
         </div>
     );
