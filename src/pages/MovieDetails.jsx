@@ -42,7 +42,7 @@ const MovieDetails = () => {
                     <div className="text-gray-300 space-y-3 mb-6">
                         <p><strong>Genre:</strong> {movie.genres.map(genre => genre.name).join(', ')}</p>
                         <p><strong>Release Date:</strong> {movie.release_date || "TBA"}</p>
-                        <p><strong>Rating:</strong> {movie.vote_average ? `⭐ ${movie.vote_average}` : "No Ratings"}</p>
+                        <p><strong>Rating:</strong> {movie.vote_average ? `⭐ ${Math.round(movie.vote_average * 10) / 10}` : "No Ratings"}</p>
                         <p><strong>Runtime:</strong> {movie.runtime ? `${movie.runtime} minutes` : "No Data"}</p>
                         <p><strong>Box Office:</strong> {totalRevenue}</p>
                         <p><strong>Production Companies:</strong> {movie.production_companies.map(company => company.name).join(', ') || "No Data"}</p>
