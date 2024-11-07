@@ -79,8 +79,7 @@ const Home = () => {
     return (
         <div className="container mx-auto p-4 min-h-screen text-white">
             <MovieCarousel featuredMovies={featuredMovies} onSelectMovie={setSearchTerm} />
-            <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-            <GenreSelector genres={genres} selectedGenre={selectedGenre} setSelectedGenre={setSelectedGenre} />
+            <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} genres={genres} selectedGenre={selectedGenre} setSelectedGenre={setSelectedGenre} />
             <h2 className="text-3xl font-semibold mb-4">Movies</h2>
             {filteredMovies.length ? (
                 <MovieList movies={filteredMovies} />
