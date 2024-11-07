@@ -10,15 +10,21 @@ const MovieCarousel = ({ featuredMovies, onSelectMovie }) => {
         setCurrentMovieIndex((prevIndex) => (prevIndex + 1) % featuredMovies.length);
     };
 
+    const prevMovie = () => {
+        if (isAnimating) return;
+        setIsAnimating(true);
+        setCurrentMovieIndex((prevIndex) => (prevIndex - 1 + featuredMovies.length) % featuredMovies.length);
+    };
+
     useEffect(() => {
-        const interval = setInterval(nextMovie, 3000);
+        const interval = setInterval(nextMovie, 7000);
         return () => clearInterval(interval);
     }, [featuredMovies]);
 
     const handleAnimationEnd = () => setIsAnimating(false);
 
     return (
-        <div className="relative overflow-hidden rounded-lg">
+        <div className="relative overflow-hidden rounded-lg group">
             <div 
                 className={`transition-transform duration-700 ease-in-out ${isAnimating ? 'animate' : ''}`}
                 style={{
@@ -48,6 +54,18 @@ const MovieCarousel = ({ featuredMovies, onSelectMovie }) => {
                     </div>
                 ))}
             </div>
+            <button 
+                className="absolute top-1/2 left-0 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                onClick={prevMovie}
+            >
+                &#9664;
+            </button>
+            <button 
+                className="absolute top-1/2 right-0 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                onClick={nextMovie}
+            >
+                &#9654;
+            </button>
         </div>
     );
 };
