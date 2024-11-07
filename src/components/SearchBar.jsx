@@ -3,7 +3,7 @@ import { FaSearch, FaTimes } from 'react-icons/fa';
 const SearchBar = ({ searchTerm, setSearchTerm, genres, selectedGenre, setSelectedGenre }) => (
     <div className="flex justify-center mt-8 mb-6">
         <div className="relative w-full max-w-lg flex items-center border border-gray-300 rounded-full shadow-sm focus-within:ring-2 focus-within:ring-blue-500 bg-white">
-            <FaSearch className="absolute left-4 text-gray-400" />
+            <FaSearch className="absolute left-4 text-black" />
             <input
                 type="text"
                 placeholder="Search for a movie..."
