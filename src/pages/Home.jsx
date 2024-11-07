@@ -6,6 +6,8 @@ import SearchBar from "../components/SearchBar";
 import GenreSelector from "../components/GenreSelector";
 import Pagination from "../components/Pagination";
 
+const API_KEY = "c7cf1f564fa32aed665c2abb44d2ffb9";
+
 const Home = () => {
     const [movies, setMovies] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
@@ -15,52 +17,50 @@ const Home = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
 
+    const fetchMovies = async (page = 1) => {
+        try {
+            const url = searchTerm
+                ? `https://api.themoviedb.org/3/search/movie?query=${searchTerm}&page=${page}&api_key=${API_KEY}`
+                : `https://api.themoviedb.org/3/trending/movie/day?page=${page}&api_key=${API_KEY}`;
+            const response = await axios.get(url);
+            setMovies(response.data.results || []);
+            setTotalPages(response.data.total_pages || 1);
+        } catch (error) {
+            console.error("Error fetching movies:", error);
+        }
+    };
+
+    const fetchGenres = async () => {
+        try {
+            const response = await axios.get(
+                `https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}`
+            );
+            setGenres(response.data.genres || []);
+        } catch (error) {
+            console.error("Error fetching genres:", error);
+        }
+    };
+
+    const fetchFeaturedMovies = async () => {
+        try {
+            const response = await axios.get(
+                `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}`
+            );
+            setFeaturedMovies(response.data.results || []);
+        } catch (error) {
+            console.error("Error fetching featured movies:", error);
+        }
+    };
+
     useEffect(() => {
-        const fetchMovies = async (page = 1) => {
-            if (searchTerm) {
-                try {
-                    const response = await axios.get(
-                        `https://api.themoviedb.org/3/search/movie?query=${searchTerm}&page=${page}&api_key=c7cf1f564fa32aed665c2abb44d2ffb9`
-                    );
-                    setMovies(response.data.results || []);
-                    setTotalPages(response.data.total_pages || 1);
-                } catch (error) {
-                    console.error("Error fetching movies:", error);
-                }
-            } else {
-                setMovies(featuredMovies);
-            }
-        };
         fetchMovies(currentPage);
-    }, [searchTerm, featuredMovies, currentPage]);
+    }, [searchTerm, currentPage]);
 
     useEffect(() => {
-        const fetchInitialMovies = async (page = 1) => {
-            try {
-                const trendingResponse = await axios.get(
-                    `https://api.themoviedb.org/3/trending/movie/day?page=${page}&api_key=c7cf1f564fa32aed665c2abb44d2ffb9`
-                );
-                setFeaturedMovies(trendingResponse.data.results || []);
-                setTotalPages(trendingResponse.data.total_pages || 1);
-            } catch (error) {
-                console.error("Error fetching initial movies:", error);
-            }
-        };
-
-        const fetchGenres = async () => {
-            try {
-                const genreResponse = await axios.get(
-                    `https://api.themoviedb.org/3/genre/movie/list?api_key=c7cf1f564fa32aed665c2abb44d2ffb9`
-                );
-                setGenres(genreResponse.data.genres || []);
-            } catch (error) {
-                console.error("Error fetching genres:", error);
-            }
-        };
-
-        fetchInitialMovies(currentPage);
+        fetchMovies(currentPage);
         fetchGenres();
-    }, [currentPage]);
+        fetchFeaturedMovies();
+    }, []);
 
     useEffect(() => {
         setCurrentPage(1);
