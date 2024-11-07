@@ -35,12 +35,13 @@ const Home = () => {
     }, [searchTerm, featuredMovies, currentPage]);
 
     useEffect(() => {
-        const fetchInitialMovies = async () => {
+        const fetchInitialMovies = async (page = 1) => {
             try {
                 const trendingResponse = await axios.get(
-                    `https://api.themoviedb.org/3/trending/movie/day?api_key=c7cf1f564fa32aed665c2abb44d2ffb9`
+                    `https://api.themoviedb.org/3/trending/movie/day?page=${page}&api_key=c7cf1f564fa32aed665c2abb44d2ffb9`
                 );
                 setFeaturedMovies(trendingResponse.data.results || []);
+                setTotalPages(trendingResponse.data.total_pages || 1);
             } catch (error) {
                 console.error("Error fetching initial movies:", error);
             }
@@ -57,9 +58,13 @@ const Home = () => {
             }
         };
 
-        fetchInitialMovies();
+        fetchInitialMovies(currentPage);
         fetchGenres();
-    }, []);
+    }, [currentPage]);
+
+    useEffect(() => {
+        setCurrentPage(1);
+    }, [searchTerm, selectedGenre]);
 
     const handlePageChange = (newPage) => {
         if (newPage > 0 && newPage <= totalPages) {
