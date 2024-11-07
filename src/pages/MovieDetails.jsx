@@ -23,8 +23,8 @@ const MovieDetails = () => {
         fetchMovie();
     }, [id]);
 
-    if (loading) return <p>Loading movie details...</p>;
-    if (!movie) return <p>Movie not found.</p>;
+    if (loading) return <div className="text-center text-white">Loading movie details...</div>;
+    if (!movie) return <div className="text-center text-white">Movie not found.</div>;
 
     return (
         <div className="container mx-auto p-6 text-white min-h-screen">
