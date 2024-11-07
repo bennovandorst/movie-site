@@ -3,7 +3,6 @@ import axios from "axios";
 import MovieList from "../components/MovieList";
 import MovieCarousel from "../components/MovieCarousel";
 import SearchBar from "../components/SearchBar";
-import GenreSelector from "../components/GenreSelector";
 import Pagination from "../components/Pagination";
 
 const API_KEY = "c7cf1f564fa32aed665c2abb44d2ffb9";
