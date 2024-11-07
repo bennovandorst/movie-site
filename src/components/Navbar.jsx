@@ -5,7 +5,7 @@ const Navbar = () => {
                 <div className="hidden md:flex space-x-6">
                     <a href="/movie-site" className="text-gray-300 hover:text-white">Home</a>
                     <a href="https://github.com/bennovandorst/movie-site" className="text-gray-300 hover:text-white">Design sucks wtf</a>
-                    {/* <a href={`watch/${randomMovieId}`} className="block text-gray-300 hover:text-white">Random Movie</a> wtf is this */}
+                    <a href="https://github.com/bennovandorst/TCR-Commit-Generator" className="block text-gray-300 hover:text-white">Commit Generator</a>
                 </div>
             </div>
         </nav>
