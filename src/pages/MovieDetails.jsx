@@ -26,6 +26,8 @@ const MovieDetails = () => {
     if (loading) return <div className="text-center text-white">Loading movie details...</div>;
     if (!movie) return <div className="text-center text-white">Movie not found.</div>;
 
+    const totalRevenue = movie.revenue ? new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(movie.revenue) : "No Data";
+
     return (
         <div className="container mx-auto p-6 text-white min-h-screen">
             <div className="flex flex-col md:flex-row items-start md:space-x-8 p-4 bg-gray-800 bg-opacity-90 rounded-lg shadow-lg">
@@ -39,10 +41,13 @@ const MovieDetails = () => {
                     <p className="text-lg mb-4">{movie.overview}</p>
                     <div className="text-gray-300 space-y-3 mb-6">
                         <p><strong>Genre:</strong> {movie.genres.map(genre => genre.name).join(', ')}</p>
-                        <p><strong>Release Date:</strong> {movie.release_date}</p>
-                        <p><strong>Rating:</strong> ⭐ {movie.vote_average}</p>
-                        <p><strong>Runtime:</strong> {movie.runtime} minutes</p>
-                        <p><strong>Production Companies:</strong> {movie.production_companies.map(company => company.name).join(', ')}</p>
+                        <p><strong>Release Date:</strong> {movie.release_date || "TBA"}</p>
+                        <p><strong>Rating:</strong> {movie.vote_average ? `⭐ ${movie.vote_average}` : "No Ratings"}</p>
+                        <p><strong>Runtime:</strong> {movie.runtime ? `${movie.runtime} minutes` : "No Data"}</p>
+                        <p><strong>Box Office:</strong> {totalRevenue}</p>
+                        <p><strong>Production Companies:</strong> {movie.production_companies.map(company => company.name).join(', ') || "No Data"}</p>
+                        <p><strong>Director:</strong> {movie.credits.crew.find(crew => crew.job === 'Director').name}</p>
+                        <p><strong>Cast:</strong> {movie.credits.cast.slice(0, 5).map(cast => cast.name).join(', ')}</p>
                     </div>
                     <div className="flex space-x-4">
                         <Link to={`/movie-site/watch/${id}`}>
